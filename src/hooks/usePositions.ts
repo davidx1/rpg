@@ -24,7 +24,7 @@ const useState = () => {
     { ...playerPos, type: 'p' },
   ]
 
-  return { tilesToDisplay }
+  return { player, character }
 }
 
 export default useGameState
