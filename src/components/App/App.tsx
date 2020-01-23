@@ -5,26 +5,36 @@ import Character from '../Character'
 import Player from '../Player'
 import useCommandState from '../../hooks/useCommandState'
 import usePlayer from '../../hooks/usePlayer'
+import useTiles from '../../hooks/useTiles'
 import useGameLoop from '../../hooks/useGameLoop'
 import * as initPos from '../../constants/initialPosition'
 
 const App: React.FC = () => {
   const { handleKeyDown, handleKeyUp, commandState } = useCommandState()
   const { playerState, movePlayer } = usePlayer({ position: initPos.player })
-  useGameLoop(() => {})
+  const { tilesState } = useTiles(
+    initPos.tiles.map(coord => ({ position: coord }))
+  )
+
+  const movementKeyState = useRef(commandState.movement)
+
+  useEffect(() => {
+    movementKeyState.current = commandState.movement
+  }, [commandState.movement])
+
+  useGameLoop(() => {
+    const len = movementKeyState.current.length
+    if (len) {
+      movePlayer(movementKeyState.current[len - 1])
+    }
+  })
 
   return (
     <Viewport onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} tabIndex={0}>
-      {tilesToDisplay.map(t => {
-        switch (t.type) {
-          case 'c':
-            return <Character key={t.x + ' ' + t.y} {...t} />
-          case 't':
-            return <Tile key={t.x + ' ' + t.y} {...t} />
-          case 'p':
-            return <Player key="player" {...t} />
-        }
+      {tilesState.map(t => {
+        return <Tile {...t.position} />
       })}
+      <Player {...playerState.position} />
     </Viewport>
   )
 }

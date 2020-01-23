@@ -8,7 +8,7 @@ const Placeable = styled.div<Coordinates>`
   transform: translate(
     ${({ x, y }) => `${x * blockSize}px, calc(${(y + 1) * blockSize}px - 100%)`}
   );
-  transition: all ${gamecycle}ms linear;
+  transition: transform ${gamecycle}ms linear;
 `
 
 export default Placeable

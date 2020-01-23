@@ -6,8 +6,10 @@ import movePlaceable from '../util/movePlaceable'
 const usePlayer = (initialState: Player) => {
   const [playerState, setPlayerState] = useState(initialState)
   const movePlayer = (direction: Commands) => {
-    const newPos = movePlaceable(direction, playerState.position)
-    setPlayerState({ ...playerState, position: newPos })
+    setPlayerState(prevState => ({
+      ...prevState,
+      position: movePlaceable(direction, prevState.position),
+    }))
   }
   return { playerState, movePlayer }
 }
