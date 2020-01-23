@@ -1,7 +1,7 @@
-import Coordinates from './Coordinates'
+import Placeable, { PlaceableTypes } from './Placeable'
 
-interface Tile {
-  position: Coordinates
+interface Tile extends Placeable {
+  type: PlaceableTypes.TILE
 }
 
 export default Tile

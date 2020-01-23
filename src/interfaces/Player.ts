@@ -1,7 +1,7 @@
-import Coordinates from './Coordinates'
+import Placeable, { PlaceableTypes } from './Placeable'
 
-interface Player {
-  position: Coordinates
+interface Player extends Placeable {
+  type: PlaceableTypes.PLAYER
 }
 
 export default Player

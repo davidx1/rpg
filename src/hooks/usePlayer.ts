@@ -8,7 +8,7 @@ const usePlayer = (initialState: Player) => {
   const movePlayer = (direction: Commands) => {
     setPlayerState(prevState => ({
       ...prevState,
-      position: movePlaceable(direction, prevState.position),
+      position: movePlaceable(direction, prevState.position, 0.5),
     }))
   }
   return { playerState, movePlayer }
