@@ -7,9 +7,6 @@ const movePlaceable = (
   currentCoordinate: Coordinates,
   moveBy: number = 0.5
 ) => {
-  console.log(
-    `moving placeable from ${currentCoordinate.x}, ${currentCoordinate.y}`
-  )
   const prev = currentCoordinate
   switch (direction) {
     case Commands.UP:

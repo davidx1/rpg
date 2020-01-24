@@ -3,13 +3,16 @@ import PlaceableType from '../../interfaces/Placeable'
 import { blockSize } from '../../constants/sizes'
 import { gamecycle } from '../../constants/duration'
 
-const Placeable = styled.div<PlaceableType>`
+const Placeable = styled.div.attrs((props: PlaceableType) => ({
+  style: {
+    backgroundPosition: props.spritePosition,
+    transform: `translate(${props.position.x * blockSize}px, calc(${(props
+      .position.y +
+      1) *
+      blockSize}px - 100%)`,
+  },
+}))<PlaceableType>`
   position: absolute;
-  transform: translate(
-    ${({ position }) =>
-      `${position.x * blockSize}px, calc(${(position.y + 1) *
-        blockSize}px - 100%)`}
-  );
   transition: transform ${gamecycle}ms linear;
 `
 

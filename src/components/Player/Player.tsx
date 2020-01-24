@@ -2,16 +2,15 @@ import styled from 'styled-components'
 import Placeable from '../Placeable'
 import { blockSize } from '../../constants/sizes'
 import playerSprite from '../../asset/sprite/player.png'
-import React, { useState, useRef, useReducer } from 'react'
+import React, { useState, useRef, useReducer, useEffect } from 'react'
 import Commands from '../../interfaces/Commands'
 import { default as MoveStatus } from '../../interfaces/MovementSpriteStatus'
 import PlaceableType from '../../interfaces/Placeable'
 
-const Player = styled(Placeable)<{ spriteToShow: MoveStatus }>`
+const Player = styled(Placeable)`
   height: ${blockSize}px;
   width: ${blockSize}px;
   background-image: url(${playerSprite});
-  background-position: ${props => props.spriteToShow};
 `
 
 interface PlayerType extends PlaceableType {
@@ -69,6 +68,11 @@ const PlayerWrapper = ({ moveCommand, ...props }: PlayerType) => {
   const [index, setIndex] = useState(0)
   const [id, setId] = useState(0)
   const indexRef = useRef(index)
+  const moveCommandRef = useRef(moveCommand)
+  useEffect(() => {
+    moveCommandRef.current = moveCommand
+    indexRef.current = index
+  }, [moveCommand, index])
   if (!moveCommand && id) {
     clearInterval(id)
     setId(0)
@@ -77,12 +81,12 @@ const PlayerWrapper = ({ moveCommand, ...props }: PlayerType) => {
     dispatch({ type: moveCommand, payload: indexRef.current })
     const id = setInterval(() => {
       setIndex(prev => (prev + 1) % 4)
-      dispatch({ type: moveCommand, payload: indexRef.current })
-    }, 400)
+      dispatch({ type: moveCommandRef.current, payload: indexRef.current })
+    }, 125)
     setId(id)
   }
 
-  return <Player spriteToShow={spriteStatus} {...props}></Player>
+  return <Player spritePosition={spriteStatus} {...props}></Player>
 }
 
 export default PlayerWrapper
