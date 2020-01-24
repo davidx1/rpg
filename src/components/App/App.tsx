@@ -22,7 +22,7 @@ const App: React.FC = () => {
   const { tilesState } = useTiles(initialState.tiles)
   const { thingsState } = useThings(initialState.things)
   const { npcsState } = useNpc(initialState.npcs)
-  const { playerState, movePlayer } = usePlayer(initialState.player)
+  const { playerState, movePlayer, stopPlayer } = usePlayer(initialState.player)
 
   const movementKeyState = useRef(commandState.movement)
 
@@ -34,6 +34,8 @@ const App: React.FC = () => {
     const len = movementKeyState.current.length
     if (len) {
       movePlayer(movementKeyState.current[len - 1])
+    } else {
+      stopPlayer()
     }
   })
 
@@ -58,9 +60,7 @@ const App: React.FC = () => {
             return (
               <Player
                 key="player"
-                moveCommand={
-                  commandState.movement[commandState.movement.length - 1]
-                }
+                spritePosition={playerState.spritePosition}
                 {...t}
               />
             )

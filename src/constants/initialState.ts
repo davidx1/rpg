@@ -3,6 +3,8 @@ import Tile from '../interfaces/Tile'
 import Things from '../interfaces/Things'
 import Player from '../interfaces/Player'
 import Npc from '../interfaces/Npc'
+import { default as MoveStatus } from '../interfaces/MovementSpriteStatus'
+import Commands from '../interfaces/Commands'
 
 export const player: Player = {
   type: PlaceableTypes.PLAYER,
@@ -10,6 +12,9 @@ export const player: Player = {
     x: 0,
     y: 2,
   },
+  direction: Commands.DOWN,
+  spritePosition: MoveStatus.DOWN_0,
+  spriteIndex: 0,
 }
 
 export const npcs: Npc[] = [
