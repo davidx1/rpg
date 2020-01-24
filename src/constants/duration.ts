@@ -1,1 +1,1 @@
-export const gamecycle = 75
+export const gamecycle = 100

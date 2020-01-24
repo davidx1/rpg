@@ -29,13 +29,11 @@ const useCommandState = () => {
         }
         return state
       case 'KeyUp':
-        if (movementMaps[action.payload]) {
-          return {
-            ...state,
-            movement: state.movement.filter(
-              d => d !== movementMaps[action.payload]
-            ),
-          }
+        return {
+          ...state,
+          movement: state.movement.filter(
+            d => d !== movementMaps[action.payload]
+          ),
         }
       default:
         return state

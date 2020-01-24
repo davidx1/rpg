@@ -1,12 +1,14 @@
 import styled from 'styled-components'
-import Coordinates from '../../interfaces/Coordinates'
+import PlaceableType from '../../interfaces/Placeable'
 import { blockSize } from '../../constants/sizes'
 import { gamecycle } from '../../constants/duration'
 
-const Placeable = styled.div<Coordinates>`
+const Placeable = styled.div<PlaceableType>`
   position: absolute;
   transform: translate(
-    ${({ x, y }) => `${x * blockSize}px, calc(${(y + 1) * blockSize}px - 100%)`}
+    ${({ position }) =>
+      `${position.x * blockSize}px, calc(${(position.y + 1) *
+        blockSize}px - 100%)`}
   );
   transition: transform ${gamecycle}ms linear;
 `

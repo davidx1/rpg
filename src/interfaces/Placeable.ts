@@ -1,5 +1,4 @@
 import Coordinates from './Coordinates'
-import { Z_NO_COMPRESSION } from 'zlib'
 
 export enum PlaceableTypes {
   'PLAYER',

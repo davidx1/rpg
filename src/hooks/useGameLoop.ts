@@ -1,8 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { gamecycle } from '../constants/duration'
-import movePlaceable from '../util/movePlaceable'
-
-type PlaceableType = { x: number; y: number; type?: string }
 
 const useGameLoop = (callback: Function) => {
   useEffect(() => {

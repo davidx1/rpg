@@ -12,31 +12,17 @@ import useThings from '../../hooks/useThings'
 import useNpc from '../../hooks/useNpc'
 import useGameLoop from '../../hooks/useGameLoop'
 
-import * as initPos from '../../constants/initialPosition'
+import * as initialState from '../../constants/initialState'
 
 import Placeable, { PlaceableTypes } from '../../interfaces/Placeable'
-import Coordinates from '../../interfaces/Coordinates'
 
 const App: React.FC = () => {
   const { handleKeyDown, handleKeyUp, commandState } = useCommandState()
 
-  const { tilesState } = useTiles(
-    initPos.tiles.map(coord => ({ type: PlaceableTypes.TILE, position: coord }))
-  )
-  const { thingsState } = useThings(
-    initPos.things.map(coord => ({
-      type: PlaceableTypes.THINGS,
-      position: coord,
-    }))
-  )
-  const { npcsState } = useNpc(
-    initPos.npcs.map(coord => ({ type: PlaceableTypes.NPC, position: coord }))
-  )
-
-  const { playerState, movePlayer } = usePlayer({
-    type: PlaceableTypes.PLAYER,
-    position: initPos.player,
-  })
+  const { tilesState } = useTiles(initialState.tiles)
+  const { thingsState } = useThings(initialState.things)
+  const { npcsState } = useNpc(initialState.npcs)
+  const { playerState, movePlayer } = usePlayer(initialState.player)
 
   const movementKeyState = useRef(commandState.movement)
 
@@ -61,16 +47,23 @@ const App: React.FC = () => {
   return (
     <Viewport onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} tabIndex={0}>
       {toRender.map(t => {
-        const p = t.position
         switch (t.type) {
           case PlaceableTypes.TILE:
-            return <Tile {...p} />
+            return <Tile {...t} />
           case PlaceableTypes.THINGS:
-            return <Things {...p} />
+            return <Things {...t} />
           case PlaceableTypes.NPC:
-            return <Npc {...p} />
+            return <Npc {...t} />
           case PlaceableTypes.PLAYER:
-            return <Player key="player" {...p} />
+            return (
+              <Player
+                key="player"
+                moveCommand={
+                  commandState.movement[commandState.movement.length - 1]
+                }
+                {...t}
+              />
+            )
           default:
             return <h1>?</h1>
         }
