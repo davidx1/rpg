@@ -33,14 +33,14 @@ const App: React.FC = () => {
   useGameLoop(() => {
     const len = movementKeyState.current.length
     if (len) {
-      movePlayer(movementKeyState.current[len - 1])
+      const potentialCollider = [...thingsState, ...npcsState]
+      movePlayer(movementKeyState.current[len - 1], potentialCollider)
     } else {
       stopPlayer()
     }
   })
 
   const toRender: Placeable[] = [
-    ...tilesState,
     ...thingsState,
     ...npcsState,
     playerState,
@@ -48,10 +48,12 @@ const App: React.FC = () => {
 
   return (
     <Viewport onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} tabIndex={0}>
+      {tilesState.map(t => {
+        return <Tile {...t} />
+      })}
       {toRender.map(t => {
         switch (t.type) {
           case PlaceableTypes.TILE:
-            return <Tile {...t} />
           case PlaceableTypes.THINGS:
             return <Things {...t} />
           case PlaceableTypes.NPC:

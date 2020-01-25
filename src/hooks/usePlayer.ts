@@ -4,6 +4,7 @@ import { useState } from 'react'
 import movePlaceable from '../util/movePlaceable'
 
 import { default as MoveStatus } from '../interfaces/MovementSpriteStatus'
+import Placeable from '../interfaces/Placeable'
 
 const commandSpriteMap = {
   [Commands.RIGHT]: [
@@ -35,11 +36,16 @@ const commandSpriteMap = {
 const usePlayer = (initialState: Player) => {
   const [playerState, setPlayerState] = useState(initialState)
 
-  const movePlayer = (direction: Commands) => {
+  const movePlayer = (direction: Commands, potentialColliders: Placeable[]) => {
     setPlayerState(prevState => ({
       ...prevState,
       direction: direction,
-      position: movePlaceable(direction, prevState.position, 0.5),
+      position: movePlaceable(
+        direction,
+        prevState.position,
+        0.5,
+        potentialColliders
+      ),
       spritePosition:
         commandSpriteMap[direction][(prevState.spriteIndex + 1) % 4],
       spriteIndex: (prevState.spriteIndex + 1) % 4,
