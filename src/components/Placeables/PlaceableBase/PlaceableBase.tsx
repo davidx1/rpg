@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import PlaceableType from '../../interfaces/Placeable'
-import { blockSize } from '../../constants/sizes'
-import { gamecycle } from '../../constants/duration'
+import PlaceableType from '../../../interfaces/Placeable'
+import { blockSize } from '../../../constants/sizes'
+import { gamecycle } from '../../../constants/duration'
 
-const Placeable = styled.div.attrs((props: PlaceableType) => ({
+const PlaceableBase = styled.div.attrs((props: PlaceableType) => ({
   style: {
     backgroundPosition: props.spritePosition,
     transform: `translate(${props.position.x * blockSize}px, calc(${(props
@@ -16,4 +16,4 @@ const Placeable = styled.div.attrs((props: PlaceableType) => ({
   transition: transform ${gamecycle}ms linear;
 `
 
-export default Placeable
+export default PlaceableBase

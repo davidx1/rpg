@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import Placeable from '../Placeable'
-import { blockSize } from '../../constants/sizes'
+import PlaceableBase from '../PlaceableBase'
+import { blockSize } from '../../../constants/sizes'
 
-const Tile = styled(Placeable)`
+const Tile = styled(PlaceableBase)`
   height: ${blockSize}px;
   width: ${blockSize}px;
   background-color: red;
