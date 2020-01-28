@@ -1,5 +1,6 @@
 import Coordinates from './Coordinates'
 import { default as MoveStatus } from './MovementSpriteStatus'
+import { default as TilePosition } from './TileSpritePosition'
 
 export enum PlaceableTypes {
   'PLAYER',
@@ -11,7 +12,7 @@ export enum PlaceableTypes {
 interface Placeable {
   position: Coordinates
   type: PlaceableTypes
-  spritePosition?: MoveStatus
+  spritePosition?: MoveStatus | TilePosition
 }
 
 export default Placeable
