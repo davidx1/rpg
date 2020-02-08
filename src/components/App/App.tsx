@@ -1,9 +1,8 @@
-import React, { useReducer, useEffect, useState, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Viewport from '../Viewport'
-import Tile from '../Tile'
-import Npc from '../Npc'
-import Things from '../Things'
-import Player from '../Player'
+import Tile from '../Placeables/Tile'
+import Things from '../Placeables/Things'
+import Character from '../Placeables/Character'
 
 import useCommandState from '../../hooks/useCommandState'
 import usePlayer from '../../hooks/usePlayer'
@@ -20,6 +19,7 @@ const App: React.FC = () => {
   const { handleKeyDown, handleKeyUp, commandState } = useCommandState()
 
   const { tilesState } = useTiles(initialState.tiles)
+  const { tilesState } = useTiles(initialState.path)
   const { thingsState } = useThings(initialState.things)
   const { npcsState } = useNpc(initialState.npcs)
   const { playerState, movePlayer, stopPlayer } = usePlayer(initialState.player)
@@ -51,16 +51,19 @@ const App: React.FC = () => {
       {tilesState.map(t => {
         return <Tile {...t} />
       })}
+      {pathsState.amp(t => {
+        return <Tile {...t} />
+      })}
       {toRender.map(t => {
         switch (t.type) {
           case PlaceableTypes.TILE:
           case PlaceableTypes.THINGS:
             return <Things {...t} />
           case PlaceableTypes.NPC:
-            return <Npc {...t} />
+            return <Character {...t} />
           case PlaceableTypes.PLAYER:
             return (
-              <Player
+              <Character
                 key="player"
                 spritePosition={playerState.spritePosition}
                 {...t}
