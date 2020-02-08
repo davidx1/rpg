@@ -19,7 +19,6 @@ const App: React.FC = () => {
   const { handleKeyDown, handleKeyUp, commandState } = useCommandState()
 
   const { tilesState } = useTiles(initialState.tiles)
-  const { tilesState } = useTiles(initialState.path)
   const { thingsState } = useThings(initialState.things)
   const { npcsState } = useNpc(initialState.npcs)
   const { playerState, movePlayer, stopPlayer } = usePlayer(initialState.player)
@@ -49,9 +48,6 @@ const App: React.FC = () => {
   return (
     <Viewport onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} tabIndex={0}>
       {tilesState.map(t => {
-        return <Tile {...t} />
-      })}
-      {pathsState.amp(t => {
         return <Tile {...t} />
       })}
       {toRender.map(t => {
