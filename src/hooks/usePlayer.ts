@@ -1,10 +1,10 @@
-import Player from '../interfaces/Player'
 import Commands from '../interfaces/Commands'
 import { useState } from 'react'
 import movePlaceable from '../util/movePlaceable'
 
 import { default as MoveStatus } from '../interfaces/MovementSpriteStatus'
 import Placeable from '../interfaces/Placeable'
+import Character from '../interfaces/Character'
 
 const commandSpriteMap = {
   [Commands.RIGHT]: [
@@ -33,7 +33,7 @@ const commandSpriteMap = {
   ],
 }
 
-const usePlayer = (initialState: Player) => {
+const usePlayer = (initialState: Character) => {
   const [playerState, setPlayerState] = useState(initialState)
 
   const movePlayer = (direction: Commands, potentialColliders: Placeable[]) => {

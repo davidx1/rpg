@@ -10,11 +10,11 @@ const PlaceableBase = styled.div.attrs((props: PlaceableType) => ({
       .position.y +
       1) *
       blockSize}px - 100%)`,
+    zIndex: Math.round(props.position.y * blockSize),
   },
 }))<PlaceableType>`
   position: absolute;
   transition: transform ${gamecycle}ms linear;
-  z-index: ${props => props.position.y};
 `
 
 export default PlaceableBase
