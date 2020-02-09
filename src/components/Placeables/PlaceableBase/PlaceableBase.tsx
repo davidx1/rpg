@@ -14,6 +14,7 @@ const PlaceableBase = styled.div.attrs((props: PlaceableType) => ({
 }))<PlaceableType>`
   position: absolute;
   transition: transform ${gamecycle}ms linear;
+  z-index: ${props => props.position.y};
 `
 
 export default PlaceableBase

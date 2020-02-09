@@ -1,16 +1,10 @@
-import { PlaceableTypes } from '../interfaces/Placeable'
-import Tile from '../interfaces/Tile'
-import Things from '../interfaces/Things'
-import Player from '../interfaces/Player'
-import Npc from '../interfaces/Npc'
 import { default as MoveStatus } from '../interfaces/MovementSpriteStatus'
 import { default as TileSprite } from '../interfaces/TileSpritePosition'
-import { default as ThingSprite } from '../interfaces/ThingsSpritePosition'
 import Commands from '../interfaces/Commands'
 import { viewportWidth, viewportHeight, blockSize } from './sizes'
+import PlaceableTypes from '../interfaces/SpriteType'
 
-export const player: Player = {
-  type: PlaceableTypes.PLAYER,
+export const player = {
   position: {
     x: 0,
     y: 2,
@@ -20,62 +14,49 @@ export const player: Player = {
   spriteIndex: 0,
 }
 
-export const npcs: Npc[] = [
-  { type: PlaceableTypes.NPC, position: { x: 1, y: 4 } },
-]
+export const npcs = [{ position: { x: 1, y: 4 } }]
 
 let temp = new Array((viewportWidth * viewportHeight) / (blockSize * blockSize))
 
-const grass: Tile[] = [...temp].map((t, index) => {
-  return {
-    type: PlaceableTypes.TILE,
-    position: {
-      x: index % (viewportWidth / blockSize),
-      y: Math.floor(index / (viewportWidth / blockSize)),
-    },
-    spritePosition: TileSprite.GRASS1,
-  }
-})
+const grass = [...temp].map((t, index) => ({
+  position: {
+    x: index % (viewportWidth / blockSize),
+    y: Math.floor(index / (viewportWidth / blockSize)),
+  },
+  type: PlaceableTypes.FLOOR_GRASS,
+  variant: 1,
+}))
 
-const path: Tile[] = [
-  [1, 1],
-  [2, 1],
-  [3, 1],
-  [4, 1],
-  [4, 2],
-  [4, 3],
-  [4, 4],
-  [4, 5],
+const path = [
+  [1, 1, PlaceableTypes.FLOOR_NOT_GRASS, 1],
+  [2, 1, PlaceableTypes.FLOOR_NOT_GRASS, 1],
+  [3, 1, PlaceableTypes.FLOOR_NOT_GRASS, 1],
+  [4, 1, PlaceableTypes.FLOOR_NOT_GRASS, 1],
+  [4, 2, PlaceableTypes.FLOOR_NOT_GRASS, 1],
+  [4, 3, PlaceableTypes.FLOOR_NOT_GRASS, 1],
+  [4, 4, PlaceableTypes.FLOOR_NOT_GRASS, 1],
+  [4, 5, PlaceableTypes.FLOOR_NOT_GRASS, 1],
 ].map(c => ({
-  type: PlaceableTypes.TILE,
   position: {
     x: c[0],
     y: c[1],
   },
-  spritePosition: TileSprite.PATH1,
+  type: c[2],
+  variant: c[3],
 }))
 
-export const tiles: Tile[] = grass.concat(path)
+export const bottomLayer = grass.concat(path)
 
-export const things: Things[] = [
-  {
-    type: PlaceableTypes.THINGS,
-    spritePosition: ThingSprite.TREE1,
-    position: { x: 1, y: 1 },
+export const topLayer = [
+  [1, 2, PlaceableTypes.TREE, 1],
+  [3, 2, PlaceableTypes.TREE, 2],
+  [5, 2, PlaceableTypes.TREE, 3],
+  [7, 2, PlaceableTypes.TREE, 4],
+].map(t => ({
+  position: {
+    x: t[0],
+    y: t[1],
   },
-  {
-    type: PlaceableTypes.THINGS,
-    spritePosition: ThingSprite.TREE2,
-    position: { x: 3, y: 3 },
-  },
-  {
-    type: PlaceableTypes.THINGS,
-    spritePosition: ThingSprite.TREE3,
-    position: { x: 4, y: 4 },
-  },
-  {
-    type: PlaceableTypes.THINGS,
-    spritePosition: ThingSprite.TREE4,
-    position: { x: 5, y: 5 },
-  },
-]
+  type: t[2],
+  variant: t[3],
+}))
